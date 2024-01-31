@@ -1,5 +1,6 @@
 class Pokemon:
     pass
+
     def __init__(self, name, poke_type, hp, attack, defense, moves, move_properties):
         self.name = name
         self.poke_type = poke_type
@@ -15,4 +16,3 @@ class Pokemon:
 
     Obj = Pokemon("Pika", "electric", 100, 100, 100, ['thunder', 'thunder', 'thunder', 'lightning'], ['fire, angel'])
     print(Obj)
-
