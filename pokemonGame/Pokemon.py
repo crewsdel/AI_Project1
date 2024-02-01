@@ -13,5 +13,4 @@ class Pokemon:
         return f"Name: {self.name}, Type: {self.poke_type}, HP: {self.hp}, Attack: {self.attack}"
 
 
-pokemonObj = Pokemon("Pikachu", "Pikachu", "Pikachu", 100, 5, 6)
-print(pokemonObj)
+
