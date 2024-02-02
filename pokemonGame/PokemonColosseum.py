@@ -47,14 +47,14 @@ with open(move_file) as csvfile:
 # print(key, "moves: ", pokemon_moves[key])
 
 # Convert keys to a list
-# keys_list = list(pokemon_moves)
+
 
 # for pokemon in pokemon_box:
 # print(pokemon)
 
 # print(pokemon_box[0])
 # Print the keys
-# print(keys_list[0])
+
 
 rocket_list = random.sample(pokemon_box, 3)
 player_list = random.sample(pokemon_box, 3)
@@ -200,10 +200,18 @@ def battle(player_pokemons, computer_pokemons):
 newPokemon = pokemon_box[3]
 random_a = random.sample(get_moves(newPokemon), 1)
 newMove = move_box[0]
+
+
+for m in move_box:
+    if random_a == m.name:
+        random_a = m
+
 print(newMove.name)
 print(random_a)
 #  print(random_a.get_move_type())
 print(pokemon_box[3])
+
+#  modified_string = original_string[1:-1]
 
 print(get_moves(newPokemon))
 print(get_attack(newPokemon))
