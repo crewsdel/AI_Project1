@@ -10,7 +10,7 @@ class Pokemon:
         # self.move_properties = move_properties
 
     def __str__(self):
-        return f"Name: {self.name}, Type: {self.poke_type}, HP: {self.hp}, Attack: {self.attack}"
+        return f"Name: {self.name}, Type: {self.poke_type}, HP: {self.hp}, Attack: {self.attack}, Defense: {self.defense}"
 
 
 class MoveProperties:
