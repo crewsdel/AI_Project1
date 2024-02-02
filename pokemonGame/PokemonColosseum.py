@@ -8,7 +8,7 @@ pokemon_filename = 'pokemon-data.csv'
 header = []
 pokemon_moves = {}
 pokemon_box = []
-
+move_box = []
 with open(pokemon_filename) as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
     header = next(reader)
@@ -63,9 +63,13 @@ print(f"Team {player_team} enters with: {', '.join(str(pokemon.name) for pokemon
 print('Let the battle begin!\n')
 
 
-# winner = 'Team Rocket'  # coin_toss()
-def is_alive(self):
-    return self.health > 0
+def damage(move, attacker, defender):
+    random_attack = random.uniform(0.5, 1.0)  # random
+    attack_bonus = 1  # STAB
+   if attacker_type == move_type:
+        attack_bonus = 1.5
+    else:
+        attack_bonus = 1
 
 
 if coin_toss == 0:

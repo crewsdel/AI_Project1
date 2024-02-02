@@ -13,4 +13,9 @@ class Pokemon:
         return f"Name: {self.name}, Type: {self.poke_type}, HP: {self.hp}, Attack: {self.attack}"
 
 
+class MoveProperties:
 
+    def __init__(self, name, move_type, power):
+        self.name = name
+        self.type = move_type
+        self.power = power
