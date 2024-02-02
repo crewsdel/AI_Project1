@@ -4,6 +4,7 @@ import random
 from pokemonGame.Pokemon import Pokemon, MoveProperties
 
 pokemon_filename = 'pokemon-data.csv'
+move_file = 'moves-data.csv'
 
 header = []
 pokemon_moves = {}
@@ -19,10 +20,7 @@ with open(pokemon_filename) as csvfile:
         pokemon = Pokemon(current_row[0], current_row[1], current_row[2], current_row[3], current_row[4],
                           current_row[7])
 
-        move_props = MoveProperties(current_row[0], current_row[1], current_row[5])
-
         pokemon_box.append(pokemon)
-        move_box.append(move_props)
 
         moves = ''
         end_of_moves = False
@@ -37,6 +35,14 @@ with open(pokemon_filename) as csvfile:
         # print(moves)
         pokemon_moves[row[0]] = ast.literal_eval(moves)  # string to list
 
+with open(move_file) as csvfile:
+    reader = csv.reader(csvfile, delimiter=',')
+    header = next(reader)
+
+    for row in reader:
+        current_row = row
+        move_props = MoveProperties(current_row[0], current_row[1], current_row[5])
+        move_box.append(move_props)
 # for key in pokemon_moves:
 # print(key, "moves: ", pokemon_moves[key])
 
@@ -193,8 +199,10 @@ def battle(player_pokemons, computer_pokemons):
 #  battle(player_list, rocket_list)
 newPokemon = pokemon_box[3]
 random_a = random.sample(get_moves(newPokemon), 1)
+newMove = move_box[0]
+print(newMove.name)
 print(random_a)
-print(random_a.get_move_type())
+#  print(random_a.get_move_type())
 print(pokemon_box[3])
 
 print(get_moves(newPokemon))
