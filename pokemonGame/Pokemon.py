@@ -17,5 +17,8 @@ class MoveProperties:
 
     def __init__(self, name, move_type, power):
         self.name = name
-        self.type = move_type
+        self.move_type = move_type
         self.power = power
+
+    def __str__(self):
+        return f"Name: {self.name}, Type: {self.move_type}, Power: {self.power}"

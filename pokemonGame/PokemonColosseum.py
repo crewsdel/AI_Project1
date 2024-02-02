@@ -1,7 +1,7 @@
 import csv
 import ast
 import random
-from pokemonGame.Pokemon import Pokemon
+from pokemonGame.Pokemon import Pokemon, MoveProperties
 
 pokemon_filename = 'pokemon-data.csv'
 
@@ -9,6 +9,7 @@ header = []
 pokemon_moves = {}
 pokemon_box = []
 move_box = []
+
 with open(pokemon_filename) as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
     header = next(reader)
@@ -18,7 +19,10 @@ with open(pokemon_filename) as csvfile:
         pokemon = Pokemon(current_row[0], current_row[1], current_row[2], current_row[3], current_row[4],
                           current_row[7])
 
+        move_props = MoveProperties(current_row[0], current_row[1], current_row[5])
+
         pokemon_box.append(pokemon)
+        move_box.append(move_props)
 
         moves = ''
         end_of_moves = False
@@ -65,11 +69,19 @@ print('Let the battle begin!\n')
 
 def damage(move, attacker, defender):
     random_attack = random.uniform(0.5, 1.0)  # random
-    attack_bonus = 1  # STAB
-   if attacker_type == move_type:
+    move_power = get_move_power(move)
+    attack = get_attack(attacker)
+    defense = get_defense(defender)
+    attacker_type = get_attack_type(attacker)
+    # defender_type = None
+    move_type = get_move_type(move)
+
+    if attacker_type == move_type:
         attack_bonus = 1.5
     else:
         attack_bonus = 1
+
+    return move_power * attack/defense * attack_bonus * random_attack
 
 
 if coin_toss == 0:
@@ -82,19 +94,39 @@ else:
 
 print(f'Coin toss goes to ----- Team {winner} to start the attack!')
 
-computer_current_pokemon = rocket_pokemon.pop(0)
-player_current_pokemon = player_pokemon.pop(0)
+
+def get_attack_type(creature):
+    return pokemon.poke_type
+
+
+def get_attack(creature):
+    return pokemon.attack
+
+
+def get_defense(creature):
+    return pokemon.defense
+
+
+def get_move_type(move):
+    return move.move_type
+
+
+def get_move_power(move):
+    return move.power
+
+print(get_attack(pokemon_box[0]))
 
 
 def battle(player_current_pokemon, computer_current_pokemon):
     computer_current_pokemon = rocket_pokemon.pop(0)
     player_current_pokemon = player_pokemon.pop(0)
+
     while len(player_pokemon) != 0 and len(rocket_pokemon) != 0:
 
         gather_moves = pokemon_moves.get(computer_current_pokemon.name)
         random_attack = random.sample(gather_moves, 1)
         print(f"Team Rocket's {computer_current_pokemon.name} attacks with: {random_attack}")
-
+        damage(random_attack, computer_current_pokemon, player_current_pokemon)
     else:
 
 
@@ -107,4 +139,4 @@ def battle(player_current_pokemon, computer_current_pokemon):
         exit()
 
 
-battle(player_current_pokemon, computer_current_pokemon)
+battle(player,ter_current_pokemon)
