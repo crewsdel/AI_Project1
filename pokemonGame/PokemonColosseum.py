@@ -122,8 +122,10 @@ def battle(player_pokemons, computer_pokemons):
 
     if coin_toss_winner == "Player":
         print("You won the coin toss! You go first.")
-
+        player_pokemon = player_list.pop(0)
+        computer_pokemon = rocket_list.pop(0)
         while len(player_list) != 0 and len(rocket_list) != 0:
+
             gather_moves = pokemon_moves.get(player_pokemon.name)
             print(gather_moves)
 
@@ -140,6 +142,8 @@ def battle(player_pokemons, computer_pokemons):
                 print(f"Team Rocket's {computer_pokemon.name} fainted!")
                 if len(rocket_list) > 0:
                     computer_pokemon = rocket_list.pop(0)
+                    print(rocket_list)
+                    print(player_list)
                     print(f"Team Rocket sends out {computer_pokemon.name}!\n")
                 else:
                     print("You defeated Team Rocket. You are the Pokémon Champion!")
@@ -159,6 +163,8 @@ def battle(player_pokemons, computer_pokemons):
                 print(f"{player_pokemon.name} fainted!")
                 if len(player_list) > 0:
                     player_pokemon = player_list.pop(0)
+                    print(rocket_list)
+                    print(player_list)
                     print(f"Go, {player_pokemon.name}!\n")
                 else:
                     print("All your Pokémon fainted. Game over.")
@@ -166,6 +172,9 @@ def battle(player_pokemons, computer_pokemons):
 
     else:
         print(f"Team Rocket won the coin toss, they go first")
+        player_pokemon = player_list.pop(0)
+        computer_pokemon = rocket_list.pop(0)
+
         while len(player_list) != 0 and len(rocket_list) != 0:
             gather_moves = pokemon_moves.get(computer_pokemon.name)
             get_moves(computer_pokemon)
@@ -180,6 +189,8 @@ def battle(player_pokemons, computer_pokemons):
                 print(f"{player_pokemon.name} fainted!")
                 if len(player_list) > 0:
                     player_pokemon = player_list.pop(0)
+                    print(rocket_list)
+                    print(player_list)
                     print(f"Go, {player_pokemon.name}!\n")
                 else:
                     print("All your Pokémon fainted. Game over.")
@@ -204,52 +215,11 @@ def battle(player_pokemons, computer_pokemons):
                 if len(rocket_list) > 0:
                     computer_pokemon = rocket_list.pop(0)
                     print(f"Team Rocket sends out {computer_pokemon.name}!\n")
+                    print(rocket_list)
+                    print(player_list)
                 else:
                     print("You defeated Team Rocket. You are the Pokémon Champion!")
                     break
 
 
 battle(player_list, rocket_list)
-
-# def battle(player_current_pokemon, computer_current_pokemon):
-#    while len(player_pokemon) != 0 and len(rocket_pokemon) != 0:
-
-#        gather_moves = pokemon_moves.get(computer_current_pokemon.name)
-#       random_attack = random.sample(gather_moves, 1)
-#       print(f"Team Rocket's {computer_current_pokemon.name} attacks with: {random_attack}")
-#       damage(random_attack, computer_current_pokemon, player_current_pokemon)
-#   else:
-
-#       print(player_current_pokemon.name)
-#       print(f'Choose the move for {player_current_pokemon.name}')
-#       gather_moves = pokemon_moves.get(player_current_pokemon.name)
-#       print(gather_moves)
-#
-#    if len(rocket_pokemon) == 0 & len(player_pokemon) == 0:
-#       exit()
-
-
-#  battle(player_list, rocket_list)
-newPokemon = pokemon_box[3]
-random_a = random.sample(get_moves(newPokemon), 1)
-newMove = move_box[0]
-
-# print(type(newPokemon.hp))
-# for move_props in move_box:
-#     if str(random_a) == move_props.name:
-#         random_a = move_props
-#         print(f' yea {random_a.move_type}, {random_a.name}')
-#         break
-
-# print(newMove)
-#
-# print(type(newMove.name))
-# print(get_move_type(random_a))
-# #  print(random_a.get_move_type())
-#
-# #  modified_string = original_string[1:-1]
-# print(type(get_move_power(random_a)))
-# print(get_moves(newPokemon))
-# print(get_attack(newPokemon))
-# print(get_defense(newPokemon))
-# print(get_attacker_type(newPokemon))
