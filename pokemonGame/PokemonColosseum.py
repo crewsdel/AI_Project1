@@ -43,18 +43,6 @@ with open(move_file) as csvfile:
         current_row = row
         move_props = MoveProperties(current_row[0], current_row[1], current_row[5])
         move_box.append(move_props)
-# for key in pokemon_moves:
-# print(key, "moves: ", pokemon_moves[key])
-
-# Convert keys to a list
-
-
-# for pokemon in pokemon_box:
-# print(pokemon)
-
-# print(pokemon_box[0])
-# Print the keys
-
 
 rocket_list = random.sample(pokemon_box, 3)
 player_list = random.sample(pokemon_box, 3)
@@ -74,21 +62,28 @@ print('Let the battle begin!\n')
 
 
 def damage(move, attacker, defender):
+    for move_props in move_box:
+        if str(move) == move_props.name:
+            move = move_props
+            break
     random_num = random.uniform(0.5, 1.0)  # random
     move_power = get_move_power(move)
+    int(move_power)
     attack = get_attack(attacker)
+    int(attack)
     defense = get_defense(defender)
+    int(defense)
     attacker_type = get_attacker_type(attacker)
     # defender_type = None
-    move_type = get_move_type()
+    move_type = move.move_type
 
     if attacker_type == move_type:
         attack_bonus = 1.5
     else:
         attack_bonus = 1
+
     minus = move_power * attack / defense * attack_bonus * random_num
-    defender.hp -= minus
-    return print(f"{defender}'s remaining health: {defender.hp}")
+    return int(minus)
 
 
 if coin_toss == 0:
@@ -114,9 +109,8 @@ def get_defense(creature):
     return creature.defense
 
 
-def get_move_type():
-    for move in move_box:
-        return move.move_type
+def get_hp(creature):
+    return creature.hp
 
 
 def get_move_power(move):
@@ -128,8 +122,10 @@ def get_moves(creature):
 
 
 def get_player_move(player_input):
-    for player_input in move_box:
-        return move_props
+    for move_props in move_box:
+        if player_input == move_props.name:
+            player_input = move_props
+        return player_input
 
 
 def battle(player_pokemons, computer_pokemons):
@@ -140,9 +136,10 @@ def battle(player_pokemons, computer_pokemons):
         get_moves(computer_pokemon)
         random_attack = random.sample(gather_moves, 1)
         print(f"Team Rocket's {computer_pokemon.name} attacks with: {random_attack}")
-        damage(random_attack, computer_pokemon, player_pokemon)
+        int(player_pokemon.hp)
+        player_pokemon.hp = int(player_pokemon.hp) - damage(random_attack, computer_pokemon, player_pokemon)
 
-        #  print(f"{player_pokemon.name}'s remaining health: {player_pokemon.hp}") this should be done by the damage
+        print(f"{player_pokemon.name}'s remaining health: {player_pokemon.hp}")
 
         if player_pokemon.hp <= 0:
             print(f"{player_pokemon.name} fainted!")
@@ -164,19 +161,20 @@ def battle(player_pokemons, computer_pokemons):
         chosen_move = get_player_move(player_choice)
 
         # Perform the damage calculation for the player's move
-        damage(chosen_move, player_pokemon, computer_pokemon)
+        computer_pokemon.hp = computer_pokemon.hp - damage(chosen_move, player_pokemon, computer_pokemon)
+        print(f"{computer_pokemon.name}'s remaining health: {computer_pokemon.hp}")
 
-        # print(f"{player_pokemon.name}'s remaining health: {player_pokemon.hp}")
-
-        if computer_pokemon.health <= 0:
+        if computer_pokemon.hp <= 0:
             print(f"Team Rocket's {computer_pokemon.name} fainted!")
-            if len(computer_pokemon) > 0:
-                computer_pokemon = computer_pokemon.pop(0)
+            if len(rocket_list) > 0:
+                computer_pokemon = rocket_list.pop(0)
                 print(f"Team Rocket sends out {computer_pokemon.name}!\n")
             else:
                 print("You defeated Team Rocket. You are the Pokémon Champion!")
                 break
 
+
+battle(player_list, rocket_list)
 
 # def battle(player_current_pokemon, computer_current_pokemon):
 #    while len(player_pokemon) != 0 and len(rocket_pokemon) != 0:
@@ -201,27 +199,22 @@ newPokemon = pokemon_box[3]
 random_a = random.sample(get_moves(newPokemon), 1)
 newMove = move_box[0]
 
+# print(type(newPokemon.hp))
+# for move_props in move_box:
+#     if str(random_a) == move_props.name:
+#         random_a = move_props
+#         print(f' yea {random_a.move_type}, {random_a.name}')
+#         break
 
-for move_props in move_box:
-    if random_a == move_props.name:
-        random_a = move_props
-        print("yea")
-
-for move_props in move_box:
-    print(move_props)
-
-print(newMove)
-
-
-
-
-print(type(newMove.name))
-print(random_a)
-#  print(random_a.get_move_type())
-
-#  modified_string = original_string[1:-1]
-
-print(get_moves(newPokemon))
-print(get_attack(newPokemon))
-print(get_defense(newPokemon))
-print(get_attacker_type(newPokemon))
+# print(newMove)
+#
+# print(type(newMove.name))
+# print(get_move_type(random_a))
+# #  print(random_a.get_move_type())
+#
+# #  modified_string = original_string[1:-1]
+# print(type(get_move_power(random_a)))
+# print(get_moves(newPokemon))
+# print(get_attack(newPokemon))
+# print(get_defense(newPokemon))
+# print(get_attacker_type(newPokemon))
