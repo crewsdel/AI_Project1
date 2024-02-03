@@ -117,24 +117,25 @@ def get_player_move(player_input):
         return player_input
 
 
-def battle(player_pokemons, computer_pokemons):
+def battle():
     coin_toss_winner = random.choice(["Player", "Computer"])
 
     if coin_toss_winner == "Player":
-        print("You won the coin toss! You go first.")
+        print("You won the coin toss! You go first!\n")
         player_pokemon = player_list.pop(0)
         computer_pokemon = rocket_list.pop(0)
-        while len(player_list) != 0 and len(rocket_list) != 0:
+        while (player_pokemon.hp > 0 and len(player_list) != 0) or (computer_pokemon.hp > 0 and len(rocket_list) != 0):
 
             gather_moves = pokemon_moves.get(player_pokemon.name)
             print(gather_moves)
 
-            player_choice = input(f'Choose the move for {player_pokemon.name}')
+            player_choice = input(f"Choose the move for {player_pokemon.name} ex: ['Dig'] ")
+            if player_choice.isnumeric():
+                print("Invalid input! strings only!")
+                player_choice = input(f"Choose the move for {player_pokemon.name} ex: ['Dig'] ")
 
-            # Assuming the player chooses a move somehow and assigns it to the variable chosen_move
             chosen_move = get_player_move(player_choice)
 
-            # Perform the damage calculation for the player's move
             computer_pokemon.hp = computer_pokemon.hp - damage(chosen_move, player_pokemon, computer_pokemon)
             print(f"{computer_pokemon.name}'s remaining health: {computer_pokemon.hp}")
 
@@ -142,14 +143,12 @@ def battle(player_pokemons, computer_pokemons):
                 print(f"Team Rocket's {computer_pokemon.name} fainted!")
                 if len(rocket_list) > 0:
                     computer_pokemon = rocket_list.pop(0)
-                    print(rocket_list)
-                    print(player_list)
                     print(f"Team Rocket sends out {computer_pokemon.name}!\n")
                 else:
                     print("You defeated Team Rocket. You are the Pokémon Champion!")
                     break
 
-            print("It's Team Rocket's turn!")
+            print("It's Team Rocket's turn!\n")
             gather_moves = pokemon_moves.get(computer_pokemon.name)
             get_moves(computer_pokemon)
             random_attack = random.sample(gather_moves, 1)
@@ -157,25 +156,23 @@ def battle(player_pokemons, computer_pokemons):
             int(player_pokemon.hp)
             player_pokemon.hp = int(player_pokemon.hp) - damage(random_attack, computer_pokemon, player_pokemon)
 
-            print(f"{player_pokemon.name}'s remaining health: {player_pokemon.hp}")
+            print(f"{player_pokemon.name}'s remaining health: {player_pokemon.hp}\n")
 
             if player_pokemon.hp <= 0:
                 print(f"{player_pokemon.name} fainted!")
                 if len(player_list) > 0:
                     player_pokemon = player_list.pop(0)
-                    print(rocket_list)
-                    print(player_list)
                     print(f"Go, {player_pokemon.name}!\n")
                 else:
                     print("All your Pokémon fainted. Game over.")
                     break
 
     else:
-        print(f"Team Rocket won the coin toss, they go first")
+        print(f"Team Rocket won the coin toss, they go first\n")
         player_pokemon = player_list.pop(0)
         computer_pokemon = rocket_list.pop(0)
 
-        while len(player_list) != 0 and len(rocket_list) != 0:
+        while (player_pokemon.hp > 0 and len(player_list) != 0) or (computer_pokemon.hp > 0 and len(rocket_list) != 0):
             gather_moves = pokemon_moves.get(computer_pokemon.name)
             get_moves(computer_pokemon)
             random_attack = random.sample(gather_moves, 1)
@@ -183,30 +180,28 @@ def battle(player_pokemons, computer_pokemons):
             int(player_pokemon.hp)
             player_pokemon.hp = int(player_pokemon.hp) - damage(random_attack, computer_pokemon, player_pokemon)
 
-            print(f"{player_pokemon.name}'s remaining health: {player_pokemon.hp}")
+            print(f"{player_pokemon.name}'s remaining health: {player_pokemon.hp}\n")
 
             if player_pokemon.hp <= 0:
                 print(f"{player_pokemon.name} fainted!")
                 if len(player_list) > 0:
                     player_pokemon = player_list.pop(0)
-                    print(rocket_list)
-                    print(player_list)
                     print(f"Go, {player_pokemon.name}!\n")
                 else:
                     print("All your Pokémon fainted. Game over.")
                     break
 
             print("It's your turn!")
-            # print(f'Choose the move for {player_pokemon.name} (1-5)')
             gather_moves = pokemon_moves.get(player_pokemon.name)
             print(gather_moves)
 
-            player_choice = input(f'Choose the move for {player_pokemon.name}')
+            player_choice = input(f"Choose the move for {player_pokemon.name} ex: ['Dig'] ")
+            if player_choice.isnumeric():
+                print("Invalid input! strings only!")
+                player_choice = input(f"Choose the move for {player_pokemon.name} ex: ['Dig'] ")
 
-            # Assuming the player chooses a move somehow and assigns it to the variable chosen_move
             chosen_move = get_player_move(player_choice)
 
-            # Perform the damage calculation for the player's move
             computer_pokemon.hp = computer_pokemon.hp - damage(chosen_move, player_pokemon, computer_pokemon)
             print(f"{computer_pokemon.name}'s remaining health: {computer_pokemon.hp}")
 
@@ -215,11 +210,9 @@ def battle(player_pokemons, computer_pokemons):
                 if len(rocket_list) > 0:
                     computer_pokemon = rocket_list.pop(0)
                     print(f"Team Rocket sends out {computer_pokemon.name}!\n")
-                    print(rocket_list)
-                    print(player_list)
                 else:
                     print("You defeated Team Rocket. You are the Pokémon Champion!")
                     break
 
 
-battle(player_list, rocket_list)
+battle()
