@@ -202,14 +202,22 @@ random_a = random.sample(get_moves(newPokemon), 1)
 newMove = move_box[0]
 
 
-for m in move_box:
-    if random_a == m.name:
-        random_a = m
+for move_props in move_box:
+    if random_a == move_props.name:
+        random_a = move_props
+        print("yea")
 
-print(newMove.name)
+for move_props in move_box:
+    print(move_props)
+
+print(newMove)
+
+
+
+
+print(type(newMove.name))
 print(random_a)
 #  print(random_a.get_move_type())
-print(pokemon_box[3])
 
 #  modified_string = original_string[1:-1]
 
