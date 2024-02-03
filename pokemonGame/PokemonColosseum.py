@@ -86,17 +86,6 @@ def damage(move, attacker, defender):
     return int(minus)
 
 
-if coin_toss == 0:
-    winner = player_team
-    loser = 'Team Rocket'
-
-else:
-    winner = 'Rocket'
-    loser = player_team
-
-print(f'Coin toss goes to ----- Team {winner} to start the attack!')
-
-
 def get_attacker_type(creature):
     return creature.poke_type
 
@@ -129,49 +118,96 @@ def get_player_move(player_input):
 
 
 def battle(player_pokemons, computer_pokemons):
-    player_pokemon = player_pokemons.pop(0)
-    computer_pokemon = computer_pokemons.pop(0)
-    while len(player_list) != 0 and len(rocket_list) != 0:
-        gather_moves = pokemon_moves.get(computer_pokemon.name)
-        get_moves(computer_pokemon)
-        random_attack = random.sample(gather_moves, 1)
-        print(f"Team Rocket's {computer_pokemon.name} attacks with: {random_attack}")
-        int(player_pokemon.hp)
-        player_pokemon.hp = int(player_pokemon.hp) - damage(random_attack, computer_pokemon, player_pokemon)
+    coin_toss_winner = random.choice(["Player", "Computer"])
 
-        print(f"{player_pokemon.name}'s remaining health: {player_pokemon.hp}")
+    if coin_toss_winner == "Player":
+        print("You won the coin toss! You go first.")
+        player_pokemon = player_pokemons.pop(0)
+        computer_pokemon = computer_pokemons.pop(0)
+        while len(player_list) != 0 and len(rocket_list) != 0:
 
-        if player_pokemon.hp <= 0:
-            print(f"{player_pokemon.name} fainted!")
-            if len(player_list) > 0:
-                player_pokemon = player_list.pop(0)
-                print(f"Go, {player_pokemon.name}!\n")
-            else:
-                print("All your Pokémon fainted. Game over.")
-                break
+            gather_moves = pokemon_moves.get(player_pokemon.name)
+            print(gather_moves)
 
-        print("It's your turn!")
-        # print(f'Choose the move for {player_pokemon.name} (1-5)')
-        gather_moves = pokemon_moves.get(player_pokemon.name)
-        print(gather_moves)
+            player_choice = input(f'Choose the move for {player_pokemon.name}')
 
-        player_choice = input(f'Choose the move for {player_pokemon.name}')
+            # Assuming the player chooses a move somehow and assigns it to the variable chosen_move
+            chosen_move = get_player_move(player_choice)
 
-        # Assuming the player chooses a move somehow and assigns it to the variable chosen_move
-        chosen_move = get_player_move(player_choice)
+            # Perform the damage calculation for the player's move
+            computer_pokemon.hp = computer_pokemon.hp - damage(chosen_move, player_pokemon, computer_pokemon)
+            print(f"{computer_pokemon.name}'s remaining health: {computer_pokemon.hp}")
 
-        # Perform the damage calculation for the player's move
-        computer_pokemon.hp = computer_pokemon.hp - damage(chosen_move, player_pokemon, computer_pokemon)
-        print(f"{computer_pokemon.name}'s remaining health: {computer_pokemon.hp}")
+            if computer_pokemon.hp <= 0:
+                print(f"Team Rocket's {computer_pokemon.name} fainted!")
+                if len(rocket_list) > 0:
+                    computer_pokemon = rocket_list.pop(0)
+                    print(f"Team Rocket sends out {computer_pokemon.name}!\n")
+                else:
+                    print("You defeated Team Rocket. You are the Pokémon Champion!")
+                    break
 
-        if computer_pokemon.hp <= 0:
-            print(f"Team Rocket's {computer_pokemon.name} fainted!")
-            if len(rocket_list) > 0:
-                computer_pokemon = rocket_list.pop(0)
-                print(f"Team Rocket sends out {computer_pokemon.name}!\n")
-            else:
-                print("You defeated Team Rocket. You are the Pokémon Champion!")
-                break
+            gather_moves = pokemon_moves.get(computer_pokemon.name)
+            get_moves(computer_pokemon)
+            random_attack = random.sample(gather_moves, 1)
+            print(f"Team Rocket's {computer_pokemon.name} attacks with: {random_attack}")
+            #  int(player_pokemon.hp)
+            player_pokemon.hp = player_pokemon.hp - damage(random_attack, computer_pokemon, player_pokemon)
+
+            print(f"{player_pokemon.name}'s remaining health: {player_pokemon.hp}")
+
+            if player_pokemon.hp <= 0:
+                print(f"{player_pokemon.name} fainted!")
+                if len(player_list) > 0:
+                    player_pokemon = player_list.pop(0)
+                    print(f"Go, {player_pokemon.name}!\n")
+                else:
+                    print("All your Pokémon fainted. Game over.")
+                    break
+            continue
+    else:
+        print("Team Rocket won the coin toss, they go first\n")
+        player_pokemon = player_pokemons.pop(0)
+        computer_pokemon = computer_pokemons.pop(0)
+        while len(player_list) != 0 and len(rocket_list) != 0:
+            gather_moves = pokemon_moves.get(computer_pokemon.name)
+            get_moves(computer_pokemon)
+            random_attack = random.sample(gather_moves, 1)
+            print(f"Team Rocket's {computer_pokemon.name} attacks with: {random_attack}")
+            int(player_pokemon.hp)
+            player_pokemon.hp = int(player_pokemon.hp) - damage(random_attack, computer_pokemon, player_pokemon)
+
+            print(f"{player_pokemon.name}'s remaining health: {player_pokemon.hp}")
+
+            if player_pokemon.hp <= 0:
+                print(f"{player_pokemon.name} fainted!")
+                if len(player_list) > 0:
+                    player_pokemon = player_list.pop(0)
+                    print(f"Go, {player_pokemon.name}!\n")
+                else:
+                    print("All your Pokémon fainted. Game over.")
+                    break
+            print(f"It's your turn!\n")
+            gather_moves = pokemon_moves.get(player_pokemon.name)
+            print(gather_moves)
+
+            player_choice = input(f'Choose the move for {player_pokemon.name}')
+
+            # Assuming the player chooses a move somehow and assigns it to the variable chosen_move
+            chosen_move = get_player_move(player_choice)
+
+            # Perform the damage calculation for the player's move
+            computer_pokemon.hp = computer_pokemon.hp - damage(chosen_move, player_pokemon, computer_pokemon)
+            print(f"{computer_pokemon.name}'s remaining health: {computer_pokemon.hp}")
+
+            if computer_pokemon.hp <= 0:
+                print(f"Team Rocket's {computer_pokemon.name} fainted!")
+                if len(rocket_list) > 0:
+                    computer_pokemon = rocket_list.pop(0)
+                    print(f"Team Rocket sends out {computer_pokemon.name}!\n")
+                else:
+                    print("You defeated Team Rocket. You are the Pokémon Champion!")
+                    break
 
 
 battle(player_list, rocket_list)
